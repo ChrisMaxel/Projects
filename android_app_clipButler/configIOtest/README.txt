@@ -1,0 +1,3 @@
+- Use "javac ConfigIO.java" to compile the java file into an executable class
+- Use "java ConfigIO" to run the executable class file
+- "testinput.txt" is the 'copied string' for the class to put into "config.txt"
