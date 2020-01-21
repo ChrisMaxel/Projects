@@ -1,0 +1,1296 @@
+<meta charset="utf-8">
+
+                 **System Requirements Specification**
+                        **5 Guys and a Noodle**
+    Caleb Anthony, Spencer Haeggberg, Matt Hapner, Chris Maxel, Nic Rose, Jake Stone
+                    236 West Reade Ave, Upland, IN 46989
+                  [www.taylor.edu](https://www.taylor.edu)
+                  \pagebreak
+
+
+
+General
+===========
+   Introduction
+   --------------
+  The purpose of this document is to explore the system requirements for the 
+  ARCO Hub church management software. The goal of ARCO Hub is to be able to 
+  provide a platform in which classes offered by the church are managed more 
+  efficiently. This will allow students and teachers to benefit from a system 
+  that is better able to handle their needs. Their current model of using an 
+  Excel spreadsheet to manage all of the data is not able to sufficiently 
+  support the volume of students and classes offered. ARCO Hub will alleviate 
+  this problem as well as improve ease of use.
+   
+   Users
+   --------------
+        Basic User: The basic user is the lowest level in the hierarchy of those
+        who have an account. They will be able to view courses and sign up for those
+        in which they meet the prerequisite requirements. Additionally, they will
+        be able to use the messaging system and view the calendar.
+
+        Student: The student is the next level up in the hierarchy of permissions. The
+        main difference between a student and a basic user is that students are or have 
+        been a part of a class. Thus, they can view information
+        about the classes they are currently enrolled in or have been enrolled in.
+
+        Teacher: This account is in the middle of the hierarchy of privileges.
+        In addition to the abilities of students and basic users, teachers can manage 
+        the classes
+        in which they are the teacher. They can mark attendance as well as who has
+        paid the course fee.
+
+        Administrator: This account is at the top of the hierarchy. In addition
+        to the privileges of the previous account types, they have the full
+        ability to view and modify classes, calendar data, messages, and user account 
+        information.
+
+    \newpage
+    Collaborating Software
+    --------------------
+        WhatsApp: For teachers to communicate with their students, a third 
+        party messaging software will be integrated. It will be able to be 
+        used by teachers, students, and administrators at their discretion. 
+        It will transfer text as well as potentially pictures.
+
+        Home Group Software: Information from the database will need to be 
+        imported, but direct integration is not required.
+    
+    Other Software
+    ---------------
+    ![Figure [SoftwareUtalized]: Other softwares that we utalized for our project](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/SoftwareUtilized.jpg)
+    
+
+    Schedule
+    ---------------
+    ![Figure [Schedule]: Project Schedule](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Schedule/schedule.PNG)
+    
+    \pagebreak
+    Glossary
+    ---------------
+        - Admin - highest level of permissions in the hierarchy of roles
+        - Business proposal (BP) - a document outlining analyses of the possible alternatives to solve the customer’s needs
+        - Class - a group of people gathered for learning purposes
+        - Data Description - all the data that moves between processes and databases, depicted in the Data Flow Diagram
+        - Data Dictionary - contains all of the entities and attributes from the Entity Relationship Diagram that are non-obvious
+        - Data Flow Diagram - a graphical representation of the flow of data between processes in a system
+        - Entity Relationship Diagram - a graphical representation to show entities, their attributes, and their relationships within a database
+        - Logical Process Model - a three part model for each of the processes in the System Response Table that includes Data Flow Diagram, Data Description, Process Specification
+        - Process Specification - a document that analyzes, in order, how inputs are converted to outputs through a process in a system 
+        - Role​ - title that describes what permissions the user will have in the system
+        - System Requirement Specification (SRS) - a document that captures a detailed analysis and logical design of an information system that solves the customer’s business problem
+        - System​ ​Response​ ​Table​ ​(SRT)​ - shows all of the processes in a given system, including triggers, outcomes, and products
+        - Student - under Teacher above user in the hierarchy of roles 
+        - Teacher - under Admin but above student on the hierarchy of roles 
+        - Use Cases - these model the event flow for each of events in the System Response Table
+        - User - a person who has created an account on the system
+        - Unregistered User - a user without an active account with the application
+        - UX Diagrams - these show the path that a user would take when using the system
+        - WireFrame - basic level diagrams outlining what the apps interface would look like
+
+
+
+System Response Table (SRT)
+===========================
+    
+    ### Admin SRT
+    | ID | Source | Trigger                            | Response            | Major Outputs                                        | External Destinations                         |
+    |:--:| :----: | :--------------------------------: | :-----------------: | :--------------------------------------------------: | :-------------------------------------------: |
+    | A1 | Admin  | Approves pending Account           | Account Approved    | Account Approval; <br> Email                         | Database; <br> Account Owner                  |
+    | A2 | Admin  | Changes Permissions for an Account | Permissions Updated | Updated Account; <br> Permission Change; <br> Email  | Account Database; <br> Database Account owner |
+    | A3 | Admin  | Suspends an Account                | Account Suspended   | Permission change; <br> Email                        | Database; <br> Account owner                  |
+    | A4 | Admin  | Posts Public Message               | Message Posted      | Message; <br> New Post Notification                  | All Users’ Homepage; <br> All Users’ email    |
+    | A5 | Admin  | Adds Event to Calendar             | Event Added         | Display New Event; <br> Event Information            | Public Calendar; <br> Database                |
+    
+    \newpage
+    | ID | Source | Trigger                            | Response            | Major Outputs                                        | External Destinations                         |
+    |:--:| :----: | :--------------------------------: | :-----------------: | :--------------------------------------------------: | :-------------------------------------------: |
+    | A6 | Admin  | Removes Event From Calendar        | Event Removed       | Displays Changed Calendar; <br> Event Information    | Public Calendar; <br> Database                |
+    | A7 | Admin  | Modifies Calendar/Event            | Event Modified      | Displays Updated Event; <br> Event Information       | Public Calendar; <br> Database                |
+    | A8 | Admin  | Creates new class                  | New Class Added     | New Class Details; <br> Updated class list           | Database; <br> Classes page                   |
+    | A9 | Admin  | Deletes existing class             | Class is deleted    | Class details to be removed; <br> Updated Class List | Database; <br> Classes page                   |
+
+    \newpage
+    ### Teacher SRT
+    | ID | Source  | Trigger                                 | Response                            | Major Outputs                                   | External Destinations                          |
+    |:--:| :-----: | :-------------------------------------: | :---------------------------------: | :---------------------------------------------: | :--------------------------------------------: |
+    | T1 | Teacher | Submits Attendance                      | Attendance Submitted                | Attendance Data;<br> Class Page                 | Database;<br> Teacher’s browser                |
+    | T1 | Teacher | Marks Payment Status                    | Student Marked as Paid              | Updated Payment status;<br> Notification Email  | Database & Roster page;<br> User’s email       |
+    | T3 | Teacher | Uploads Lesson Plan                     | Lesson Plan Uploaded                | Lesson Plan;<br> Displays Lesson Plan           | Database;<br> Course Page                      |
+    | T4 | Teacher | Mass Email Sendout                      | Emails Sent                         | Email                                           | Course Participants                            |
+    | T5 | Teacher | Changes Class Details                   | Class Details Updated               | Updated class details;<br> Email                | Database;<br> Class page;<br> Students’ email; |
+    | T6 | Teacher | Sends Message to Student                | Student Receives Message            | Message information;<br> Reply                  | Database;<br> Student’s email                  |
+    | T7 | Teacher | Marks Completion of Course              | Course marked Completed for student | Completed class data;<br> Email                 | Database;<br> Student                          |
+    | T8 | Teacher | Approves a user’s request to join class | User joined class                   | Email;<br> User data & Updated Permissions      | User’s email;<br> Database;                    |
+    
+    \newpage
+    ### Student SRT
+    | ID | Source   | Trigger                   | Response                     | Major Outputs           | External Destinations         |
+    |:--:| :------: | :-----------------------: | :--------------------------: | :---------------------: | :---------------------------: |
+    | S1 | Students | Checks Class Progress     | Show Progress                | Class Progress          | Student’s browser             |
+    | S2 | Students | Sends Question to Teacher | Question sent                | Question;<br> Message   | Teacher’s email;<br> Database |
+    | S3 | Students | Withdraws From Class      | Student withdrawn from class | Student Data;<br> Email | Database;<br> Teacher’s email |
+
+    \newpage
+    ### User SRT
+    | ID | Source   | Trigger                     | Response           | Major Outputs                                    | External Destinations                      |
+    |:--:| :------: | :-------------------------: | :----------------: | :----------------------------------------------: | :----------------------------------------: |
+    | U1 | User     | Visits Application Web Page | Web Page Loads     | Displays View-only screen                        | User’s Browser                             |
+    | U2 | User     | Registers an Account        | Account Registered | New Pending Account;<br> Email;<br> Notification | Database;<br> User’s email;<br> All Admins |
+    | U3 | User     | Logs In                     | Logged In          | Displays Home Page                               | User’s Browser                             |
+    | U4 | User     | Logs In                     | Link Opens         | Displays Contact Page                            | User’s Browser                             |
+    | U5 | User     | Requests access to a Class  | Access requested   | Email;<br> Notification;<br> Enrollment Request  | Teacher’s email;<br> Teacher;<br> Database |
+    | U6 | User     | Views Calendar              | Calendar Viewed    | Events on Calendar                               | User’s Browser                             |
+    | U7 | User     | Changes Language            | Language Changed   | Translated page                                  | User’s Browser                             |
+    | U8 | User     | Logs out                    | Logged Out         | View-only screen;<br> Session Info               | User’s browser;<br> Database                   |
+
+
+Use Cases & Logical Process Models
+==================================
+
+![Figure [A1]: A1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A1.PNG)
+
+![Figure [A1.1]: A1.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A1.1.PNG)
+
+![Figure [Approve Account]: Approve Account](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/approveAccount.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Decision = member_id, personal_attr_id, value
+    Notification Email = member_id, email, text
+    Account Information = member_id, first_name, last_name, personal_attr_id, value
+
+Process Specification:  
+    Identify user       
+    Get Account Information     
+    Using Account Info, get personal attributes
+    Approve or deny account 
+    Get account Information
+    If Admin accepts:
+        - Change member status to accepted
+        - Send email to member
+        
+    If Admin rejects:
+        - Change member status to rejected
+        - Send email to user
+~~~~~~~~~
+\newpage
+![Figure [A2]: A2](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A2.PNG)
+
+![Figure [A2.1]: A2.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A2.1.PNG)
+
+![Figure [Change Permissions]: Change Permissions<br>](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/changePermissions.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Decision = member_id, personal_attr_id, value
+    Notification Email = member_id, email, text
+    Account Information = member_id, first_name, last_name, personal_attr_id, value
+
+Process Specification:
+    Identify user
+    Get Account Information
+    Using Account Info, get personal attributes
+    Approve or deny account
+    Get account Information
+    If Admin accepts:
+        - Change member status to accepted
+        - Send email to member
+    If Admin rejects:
+        - Change member status to rejected
+        - Send email to user
+~~~~~~~~~
+
+![Figure [A3]: A3](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A3.PNG)
+
+![Figure [A3.1]: A3.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A3.1.PNG)
+
+![Figure [Suspend Account]: Suspend Account](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/suspendAccount.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Notification Email = member_id, email, text
+    Account Information = member_id, first_name, last_name, personal_attr_id, value
+
+Process Specification:
+    Suspend Account
+    Get account information
+    Using account information
+        - Change member account status to suspended
+    Send notification email to member
+~~~~~~~~~
+
+![Figure [A4]: A4](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A4.PNG)
+
+![Figure [A4.1]: A4.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A4.1.PNG)
+
+![Figure [Post Public Message]: Post Public Message](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/postPublicMessage.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Message information = author, title, body, datetime
+    Account Information = {member_id, first_name, last_name, personal_attr_id, value, email}
+    Notification Email = member_id, email, text
+
+Process Specification:
+    Post message
+    Get sender information
+    Get message text
+    Identify message destinations
+
+    If all data filled out:
+        - Post message to message board
+        - Send all recipients email notification
+    If data is not filled out:
+        - Prompt user to fill out unfilled data
+~~~~~~~~~
+
+![Figure [A5]: A5](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A5.PNG)
+
+![Figure [A5.1]: A5.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A5.1.PNG)
+
+![Figure [Add Event]: Add Event](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/addCalendarEvent.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Calendar Information = meeting_id, location, desc
+    Calendar Data = id, meeting_id, location, desc
+
+Process Specification:
+    Add event
+    Get event information
+    Add event to calendar
+~~~~~~~~~
+
+![Figure [A6]: A6](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A6.PNG)
+
+![Figure [A6.1]: A6.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A6.1.PNG)
+
+![Figure [Remove Event]: Remove Event](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/removeCalendarEvent.PNG)
+
+~~~~~~~~~ text
+Remove Event:
+    Data Description:
+    Calendar Information = meeting_id, location, desc
+    Calendar Data = id, meeting_id, location, desc
+
+Process Specification:
+    Get event information
+    Using event information:
+        - Prompt deletion confirmation
+        - Delete event from calendar
+~~~~~~~~~
+
+![Figure [A7]: A7](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A7.PNG)
+
+![Figure [A7.1]: A7.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A7.1.PNG)
+
+![Figure [Modify Calendar Event]: Modify Calendar Event](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/modifyCalendarEvent.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Calendar Information = meeting_id, location, desc
+    Calendar Data = id, meeting_id, location, desc
+
+Process Specification:
+    Get calendar information
+    Get updated event information
+    Update event information in calendar
+~~~~~~~~~
+
+![Figure [A8]: A8](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A8.PNG)
+
+![Figure [A8.1]: A8.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A8.1.PNG)
+
+![Figure [Create New Class]: Create New Class](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/createNewClass.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Class Information  = location, teacher, start_date, end_date, is_active, name, desc, created_date
+    Class Data = id, class_id, location_id, teacher_id, start_date, end_date, is_active, name, desc, created_date
+
+Process Specification:
+    Create new class
+    Get class Information
+    Using class information:
+        If location invalid:
+            - Return error for location
+        If location valid:
+            - Update class list
+~~~~~~~~~
+
+![Figure [A9]: A9](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A9.PNG)
+
+![Figure [A9.1]: A9.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/A9.1.PNG)
+
+![Figure [Delete Class]: Delete Class](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/deleteClass.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Class Information  = location, teacher, start_date, end_date, is_active, name, desc, created_date
+    Class Data = id, class_id, location_id, teacher_id, start_date, end_date, is_active, name, desc, created_date
+
+Process Specification:
+    Delete class
+    Get class Information
+    Using class information:
+        If class exists:
+            Prompt for confirmation
+        If user confirms:
+            - Delete class
+        If user does not confirm
+            - Return to class page
+~~~~~~~~~
+
+![Figure [T1]: T1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T1.PNG)
+
+![Figure [T1.1]: T1.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T1.1.PNG)
+
+![Figure [Submit Attendance]: Submit Attendance](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/submitAttendance.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Attendance Info  =  meeting_id, {member_id, is_present}
+    Attendance Data = class_section_meeting_id, {member_id, is_present}
+    Class information = meeting_id, class_section_id, teacher_id 
+
+Process Specification:
+    Submit attendance
+    Get meeting info
+    Collect attendance Info 
+    Update class section attendance
+    Update member attendance
+~~~~~~~~~
+
+![Figure [T2]: T2](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T2.PNG)
+
+![Figure [T2.1]: T2.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T2.1.PNG)
+
+![Figure [Mark Payment Status]: Mark Payment Status](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/markPaymentStatus.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Payment Status = class, payment status, member
+    Payment Info = member_id, is_paid, class_section_id, enrolled_date
+    Payment Confirmation Email = class_section_id, enrolled_date, email text
+    Class information = class_id, class_section_id, teacher_id, is_active
+
+Process Specification:
+    Mark member as paid
+    Get member Info
+    Get payment status
+    Using member info:
+        If member has paid:
+            - Mark student as paid
+        Send member payment confirmation email
+~~~~~~~~~
+
+![Figure [T3]: T3](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T3.PNG)
+
+![Figure [T3.1]: T3.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T3.1.PNG)
+
+![Figure [Upload Lesson Plan]: Upload Lesson Plan](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/uploadLessonPlan.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Document  = id, owner_id, name, filetype, path, uploaded_date
+    Class Information = class_id, class_section_id, teacher_id
+
+Process Specification:
+    Upload lesson Plan
+        - Save document and attach to class_section 
+    Gather course information
+    Open document uploader
+    Upload document
+    If file type is invalid:
+        - Display error and repeat last step
+    If file type is valid:
+        - Finish uploading document
+        - Attach document to class
+~~~~~~~~~
+
+![Figure [T4]: T4](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T4.PNG)
+
+![Figure [T4.1]: T4.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T4.1.PNG)
+
+![Figure [Send Mass Email]: Send Mass Email](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/sendMassEmail.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Email Information = teacher info, class_id, message text
+    Email = {email content, email destination address, sender address}
+    Student Information = {member_id, email}
+
+Process Specification:
+    Send mass email
+    Locate Specify which class to email
+    Gather student emails from class_section_member
+    Get email content
+    Send email to members
+~~~~~~~~~
+
+![Figure [T5]: T5](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T5.PNG)
+
+![Figure [T5.1]: T5.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T5.1.PNG)
+
+![Figure [Send Mass Email]: Send Mass Email](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/modifyClass.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Class Information = location, teacher, start_date, end_date, is_active, name, desc
+    Class Data = id, class_id, location_id, teacher_id, start_date, end_date, is_active, name, desc
+
+Process Specification:
+    Modify class information
+    Get Class Information
+    Get Class Data
+    With updated class Information:
+        - Update class Data
+~~~~~~~~~
+
+![Figure [T6]: T6](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T6.PNG)
+
+![Figure [T6.1]: T6.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T6.1.PNG)
+
+![Figure [Send Message]: Send Message](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/sendMessage.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Message information = text, datetime, sender_id, reciever_id,status
+    Account Information = member_id, first_name, last_name, personal_attr_id, value, id
+    Notification Email = member_id, email, text
+
+Process Specification:
+    Post message
+    Get sender information
+    Get message text
+    Identify message destination
+    Using message information
+        - Send message to member
+    Send notification email to member
+~~~~~~~~~
+
+![Figure [T7]: T7](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T7.png)
+
+![Figure [T7.1]: T7.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T7.1.png)
+
+![Figure [Mark Course Completion]: Mark Course Completion](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/markCourseCompletion.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Class Info = id, class_id, end_date, is_active, enrolled_date, completed_date
+    Student Info = {member_id, enrolled_date, request_enrollment_date}, class_id
+    
+Process Specification:
+    Mark course completion
+    Get class information
+    Set completion date to current data
+    Set is_active to false
+    Mark students who qualify for completion as completed
+~~~~~~~~~
+
+![Figure [T8]: T8](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T8.PNG)
+
+![Figure [T8.1]: T8.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/T8.1.PNG)
+
+![Figure [Approve Student Enrollment]: Approve Student Enrollment](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/approveStudentEnrollment.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Approval Decision = member_id, class_id, enrolled_date
+    Student Information = {member_id, class_id, request_enrollment_date, enrolled_date}
+    Notification Email = member_id, email, text
+
+Process Specification:
+    Identify student for approval
+    Get class information
+    With class information:
+        - Find all students that requested enrollment
+    Approve or reject enrollment
+    Get Student Information
+    With Student Information:
+        If teacher approves student:
+            - Mark student as enrolled
+            - Email student acceptance notification email
+        If teacher rejects student:
+            - Email student rejection notification email
+~~~~~~~~~
+
+![Figure [S1]: S1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S1.PNG)
+
+![Figure [S1.1]: S1.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S1.1.PNG)
+
+![Figure [Check Class Progress]: Check Class Progress](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/checkClassProgress.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Class Inquiry = class_section_id, member_id
+    Class Information = class_name, desc, end_date
+    Attendance Information = {member_id, is_present}, class_section_id
+
+Process Specification:
+    Check class progress
+    Get Class Information
+    Using Class Information:
+        - Find class & display attendance information
+~~~~~~~~~
+
+![Figure [S2]: S2](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S2.PNG)
+
+![Figure [S2.1]: S2.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S2.1.PNG)
+
+![Figure [Send Message To Teacher]: Send Message To Teacher](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/sendMessageToTeacher.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Student Information = member_id, first_name, last_name
+    Question Info = text, sender_id, receiver_id, datetime
+    Notification Email = first_name, last_name, member_id, notification text, question text
+
+Process Specification:
+    Check class progress
+    Get message information
+    Send message to recipient
+    Send notification Email to recipient
+~~~~~~~~~
+
+![Figure [S3]: S3](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S3.PNG)
+
+![Figure [S3.1]: S3.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/S3.1.PNG)
+
+![Figure [Drop Class]: Drop Class](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/dropClass.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Confirmation Email = class_name, confirmation text
+    Class Information = class_section_id
+    Student Information = member_id, class_section_id
+    Notification Email = first_name, last_name, member_id, class_name, notification text
+
+Process Specification:
+    Withdraw from Class
+    Get class Information
+    Select Drop class
+    Send confirmation email to student
+    Student confirms
+    Send notification email to teacher
+~~~~~~~~~
+
+![Figure [U1]: U1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U1.PNG)
+
+![Figure [U1.1]: U1.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U1.1.PNG)
+
+![Figure [Visit Page]: Visit Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/visitPage.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    User Information = ip address, browser type
+    Calendar Information = {event, location, desc}
+    Calendar Data = {event_id, meeting_id, location_id, desc}
+
+Process Specification:
+    User Visits Page
+    Get User Information
+    Display view-only page data
+~~~~~~~~~
+
+![Figure [U2]: U2](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U1.PNG)
+
+![Figure [U2.1]: U2.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U2.1.PNG)
+
+![Figure [Register Account]: Register Account](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/registerAccount.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    User Information = first_name, last_name, email, phone_number, gender, birthday
+    Confirmation Email = email, first_name, last_name, confirmation text
+    Account Information = member_id, first_name, last_name, email, phone_number, gender, birthday
+    Notification Email = member_id, first_name, last_name, email, notification text
+
+Process Specification:
+    Register account
+    Display registration page
+    Get user email
+    if user email already exists:
+        Confirm Home groups account existence
+        If user confirms account:
+            - Create new attribute instances for existing account
+            - Send confirmation email
+        If user denies existing account:
+            - Send notification to Admin
+    If user email does not exist:
+        - Get further user information
+        - Create member account
+        - Send confirmation email to user
+        - Send notification email to admin
+~~~~~~~~~
+
+![Figure [U3]: U3](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U3.PNG)
+
+![Figure [U3.1]: U3.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U3.1.PNG)
+
+![Figure [Login]: Login](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/login.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    User Credentials = email, password
+    Login Information = member_id, login_datetime, ip_address
+    Member Info = member_id
+
+Process Specification:
+    Login
+    Display login page
+    Get User Credentials
+    If User Credentials do not match existing data:
+        - Display error
+        - Have user repeat login
+    If User Credentials match existing data:
+        - Create or update session 
+        - Log in and display main page
+~~~~~~~~~
+
+![Figure [U4]: U4](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U4.PNG)
+
+![Figure [U4.1]: U4.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U4.1.PNG)
+
+![Figure [Contact Us]: Contact Us](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/contactUs.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Message = text, datetime, sender_id, reciever_id
+    Admin Information = member_id, email, phone_number
+    Email Notification = sender_id, datetime, text
+
+Process Specification:
+    Contact Us
+    Display contact us page
+    Get user information
+    Get user message
+    Send notification email to admin
+~~~~~~~~~
+
+![Figure [U5]: U5](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U5.PNG)
+
+![Figure [U5.1]: U5.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U5.1.PNG)
+
+![Figure [Request Enrollment]: Request Enrollment](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/requestEnrollment.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Confirmation Email = class_name, confirmation text
+    Class Information = class_section_id, class_id, class_name
+    Student Information = member_id, class_section_id
+    Notification Email = first_name, last_name, member_id, class_name, notification text
+
+Process Specification:
+    Search available Classes
+    Get list of all classes
+    Display class list page
+    With list of classes:
+        - Display details of classes to user
+    Enroll in class
+    Get class information
+    If student does not qualify to enroll:
+        - Display error and reason
+    If student does have prerequisites:
+        - Request for enrollment in class
+        - Send request confirmation email
+        - Send notification email to teacher
+~~~~~~~~~
+
+![Figure [U6]: U6](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U6.PNG)
+
+![Figure [U6.1]: U6.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U6.1.PNG)
+
+![Figure [View Calendar]: View Calendar](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/viewCalendar.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    User Information = text, datetime, sender_id, receiver_id
+    Calendar Information = meeting_id, location, desc
+    Calendar Data = id, meeting_id, location, desc
+
+Process Specification:
+    View Calendar
+    Get User Information
+    Get Calendar Data
+    Display Calendar Data
+~~~~~~~~~
+
+![Figure [U7]: U7](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U7.PNG)
+
+![Figure [U7.1]: U7.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U7.1.PNG)
+
+![Figure [Drop Class]: Drop Class](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/changeLanguagePreference.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Language = user’s language choice
+    Preference info = personal_attr_id, value, member_id
+
+Process Specification:
+    Change language preference
+    Get current user preference
+    Display user preference
+    Get new user preference
+    Update user preference
+~~~~~~~~~
+
+![Figure [U8]: U8](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U8.PNG)
+
+![Figure [U8.1]: U8.1](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UseCaseImages/U8.1.PNG)
+
+![Figure [Log Out]: Log Out](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ProcessDiagrams/logOut.PNG)
+
+~~~~~~~~~ text
+Data Description:
+    Member Id = member_id
+
+Process Specification:
+    Logout
+    Get user information
+    End session
+    Log out & display login page
+~~~~~~~~~
+
+
+
+Logical Data Model
+====================
+The following Entity Relationship Diagram (ERD) shows the layout for the database we will be implementing. Each entity within this diagram represents
+ a table, and each attribute represents a column within that table. The connecting lines represent the relationships between these tables. Tables are 
+ related (or joined) together by “keys” which are denoted by (PK) or (FK). The gray entities represent tables that already exist in the homegroup 
+ application for the church.
+
+ \newpage
+    ### ERD
+    
+        ![Figure [ERD]: ERD](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/ERD3.png)
+
+        The two tables with a dark gray border will be joined to by the new database.
+
+        ![Figure [Homegroup Database]: Homegroup Database](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/homeGroup.PNG) 
+
+Data Dictionary
+=====================
+    The Data Dictionary is a detailed description of the entities and attributes of the Logical Data Model. In addition, one can find relationships between 
+    entities laid out here as well as information about how the new database will interact with the current homegroup database.
+
+    (PK) = Primary Key
+    
+    (FK#) = Foreign Key
+
+    **Member -**
+        Represents the users/accounts that exist in the system. This entity already exists in the homegroup database and will be very central to both applications. 
+        It will maintain all of the relationships within that database as well as the additional relationships listed below.
+
+        Relationships:
+            - Has a one-to-many relationship with the member_personal_attr entity.
+            - Has a one-to-many relationship with the session entity.    
+            - Has a one-to-many relationship with the class_section entity.    
+            - Has a one-to-many relationship with the class_section_member entity.    
+            - Has a one-to-many relationship with the document entity.    
+            - Has a one-to-many relationship with the announcement entity.    
+            - Has a one-to-many relationship with the message entity.    
+            - Has a one-to-many relationship with the attendance entity.
+        Attributes:
+            - id (PK)
+            - first_name
+            - last_name
+            - email
+            - phone_number
+            - gender
+            - birthday
+            - baptism_status
+            - marital_status_id (FK)
+            - how_did_you_find_out_id (FK) - a key that provides information on how someone found out about a home group.
+            - is_a_parent
+            - join_date
+            - is_active
+
+    Any additional attributes given to a member will be handled through the member_personal_attr and personal_attr entities.
+
+    **Meeting -**
+        Represents the date and time that meetings, events or classes will be held. This entity also already exists in the homegroup database. 
+        It will maintain all the current relationships it has and will take on the additional ones listed below.
+    
+        Relationships:
+            - Has a one-to-many relationship with the class_section_meeting entity.
+            - Has a one-to-many relationship with the event entity.
+        Attributes:
+            - id (PK)
+            - date
+            - time
+    
+
+    **Member_personal_attr -**
+        Holds the value that a member has for a personal attribute.
+
+        Relationships:
+            - Has a many-to-one relationship with the member entity.
+            - Has a many-to-one relationship with the personal_attr entity.
+        Attributes:    
+            - member_id (PK, FK1)
+            - personal_attr_id (PK, FK2)        
+            - value - the value of the personal attribute for the corresponding member.
+
+            
+    **Personal_attr -**
+        Provides a list of all attributes a member can have.
+
+        Relationships:
+            - Has a one-to-many relationship with the member_personal_attr entity.
+        Attributes:
+            - id (PK)
+            - desc - a description of the attribute
+
+    
+    **Session -**
+        Provides details on the session of a logged in member.
+
+        Relationships:
+            - Has a many-to-one relationship with the member entity.
+        Attributes:
+            - id (PK)
+            - member_id (FK)
+            - login_datetime
+            - ip_address
+            - is_active
+
+            
+            
+    **Class -**
+        Each instance provides information about one type of class offered by Arco.
+
+        Relationships:
+            - Has a one-to-many relationship with the class_section entity.
+            - Has two one-to-many relationships with the prerequisite entity.
+        Attributes:
+            - id (PK)
+            - name
+            - desc
+            - created_date
+            - is_active
+
+            <br>
+    **Prerequisite -**
+        Contains classes that need to be completed before a member can take another class.
+
+        Relationships:
+            - Has two many-to-one relationships with the class entity.
+        Attributes:
+            - class_id (PK, FK1) - id of the class containing the prerequisite.
+            - prereq_class_id (PK, FK2) - id of the class that is the prerequisite.
+
+            <br>
+    **Message -**
+        Contains information about messages sent between users.
+
+        Relationships:
+            - Has two many-to-one relationships with the member entity
+        Attributes:
+            - id (PK)
+            - sender_id (FK1)
+            - receiver_id (FK2)
+            - text - the contents of the message.
+            - status - the delivery status of the message.
+            - datetime
+
+            <br>
+    **Announcement -**
+        Contains information about public messages posted.
+
+        Relationships:
+            - Has a many-to-one relationship with the member entity.
+        Attributes:
+            - id (PK)
+            - author_id (FK1)
+            - title
+            - body - the textual contents of the announcement
+            - datetime
+
+            <br>
+    **Document -**
+        Contains information about documents that a user uploads to the server hosting the database (specifically lesson plans for teachers).
+
+        Relationships:
+            - Has a one-to-many relationship with the class_section_document entity.
+            - Has a many to one relationship with the member entity.
+
+        Attributes:
+            - id (PK)
+            - owner_id (FK1)
+            - name - the saved name of the document.
+            - filetype - the type of the document (based on file extension).
+            - path - the path to the document on the server.
+            - uploaded_date
+
+            <br>
+    **Event -**
+        Contains information about an event taking place.
+
+        Relationships:
+            - Has a many-to-one relationship with the meeting entity.
+            - Has a many-to-one relationship with the location entity.
+
+        Attributes:
+            - id (PK)
+            - meeting_id (FK1) - a key that provides the date and time of the event.
+            - location_id (FK2)
+            - desc - a description of the event.
+
+            
+    **Location -**
+        Contains information about the location of a class or event.
+
+        Relationships:
+            - Has a one-to-many relationship with the event entity.
+            - Has a one-to-many relationship with the class_section entity.
+
+        Attributes:
+            - id (PK)
+            - name
+            - desc - a description of the location/directions to get there.
+            - latitude
+            - longitude
+
+                
+    **Class_section -**
+        Contains information on a particular instance of an offered class (we like the terminology section).
+
+        Relationships:
+            - Has a one-to-many relationship with the class_section_meeting entity.
+            - Has a many-to-one relationship with the class entity.
+            - Has a many-to-one relationship with the member entity.
+            - Has a one-to-many relationship with the class_section_member entity.
+            - Has a one-to-many relationship with the class_section_document entity.
+            - Has a many-to-one relationship with the location entity.
+
+        Attributes:
+            - id (PK)
+            - class_id (FK1)
+            - location_id (FK2)
+            - teacher_id (FK3)
+            - start_date
+            - end_date
+            - is_active
+
+                
+    **Class_section_member -**
+        Contains information about each member of each section of a class.
+
+        Relationships:
+            - Has a many-to-one relationship with the member entity.
+            - Has a many-to-one relationship with the class_section entity.
+
+        Attributes:
+            - member_id (PK, FK1)
+            - class_section_id (PK, FK2)
+            - is_paid - has the user paid the fee for the class.
+            - request_enrollment_date - the date the user requested to join a class.
+            - enrolled_date - the date the user was accepted into a class.
+            - completed_date - the date the user completed the class (NULL if incomplete).
+            - Class_section_document - Contains information about documents that pertain to a specific section of a class.
+
+        Relationships:
+            - Has a many-to-one relationship with the document entity.
+            - Has a many-to-one relationship with the class_section entity.
+
+        Attributes:
+            - class_section_id (PK, FK1)
+            - document_id (PK, FK2)
+
+                
+    **Class_section_meeting -**
+        Contains information about each meeting for a specific section of a class.
+
+            Relationships:
+                - Has a one-to-many relationship with the attendance entity.
+                - Has a many-to-one relationship with the meeting entity.
+                - Has a many-to-one relationship with the class_section entity.
+
+            Attributes:
+                - id (PK)
+                - meeting_id (FK1)
+                - class_section_id (FK2)
+
+                
+    **Attendance -**
+        Contains information about a student's presence for an class meeting
+        
+        Relationships:
+            - Has a many-to-one relationship with the class_section_meeting entity.
+            - Has a many-to-one relationship with the member entity.
+
+        Attributes:
+            - class_section_meeting_id (PK, FK1)
+            - member_id (PK, FK2)
+            - is_present - whether or not the member was present at a class meeting.
+
+
+<!-- Logical Process Model
+======================== -->
+
+User Expericence Diagrams
+============================
+
+![Figure [Account Registration]: Account Registration](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UX/accountRegistration.PNG) 
+
+![Figure [Home Dashboard]: Home Dashboard](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UX/homeDashboard.PNG)
+
+![Figure [login]: login](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UX/login.PNG)
+
+![Figure [Student Dashboard]: Student Dashboard](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UX/studentDashboard.PNG)
+
+![Figure [Teacher Dashboard]: Teacher Dashboard](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/UX/teacherDashboard.PNG)
+
+\pagebreak
+\pagebreak
+Wireframes
+==========================
+    ### Account Managment        
+        
+        ![Figure [Account Management HomePage Post Login]: Account Management Home Page Post Login](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\AccountManagment/AccountManagementHomePagePostLogin.jpg)
+        
+        ![Figure [Approve Accounts Page]: Approve Accounts Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\AccountManagment/ApproveAccountsPage.jpg)
+        
+        ![Figure [Manage Accounts Page]: Manage Accounts Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\AccountManagment/ManageAccountsPage.jpg)
+        <!--![Figure [Thumb]: Thumb](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\AccountManagment/Thumbs.db)-->
+        
+        ![Figure [View Accounts Page]: View Accounts Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\AccountManagment/ViewAccountsPage.jpg)
+
+    \pagebreak
+    ### Announcements
+
+    ![Figure [Announcements Page]: AnnouncementsPage](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Announcements/AnnouncementsPage.jpg)
+    
+    ![Figure [ListAnnouncements Page]: ListAnnouncementsPage](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Announcements/ListAnnouncementsPage.jpg)
+    
+    ![Figure [Manage Manage Calendar Event Page]: Manage Manage Calendar Event Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Announcements/ManageManageCalendarEventPage.jpg)
+    
+    ![Figure [Post Announcement Page]: Post Announcement Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Announcements/PostAnnouncementPage.jpg)
+    
+    \pagebreak
+    ### Calendar
+    
+    ![Figure [Add Calendar Event Page]: Add Calendar Event Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Calendar/AddCalendarEventPage.jpg )
+    
+    ![Figure [Calendar Page]: Calendar Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Calendar/CalendarPage.jpg )
+    
+    ![Figure [List Calendar Events Page]: List Calendar Events Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Calendar/ListCalendarEventsPage.jpg )
+    
+    ![Figure [Manage Calendar Events Page]: Manage Calendar Events Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Calendar/ManageCalendarEventsPage.jpg)
+    
+    \pagebreak
+    ### Class Selection
+    
+    ![Figure [Class List Page]: Class List Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ClassListPage.jpg )
+    
+    ![Figure [Class Roster Page]: Class Roster Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ClassRosterPage.jpg )
+    
+    ![Figure [Class Selection Page]: Class Selection Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ClassSelectionPage.jpg )
+    
+    ![Figure [Confirmation Page]: Confirmation Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ConfirmationPage.jpg )
+    
+    ![Figure [Create Class List Page]: Create Class List Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/CreateClassListPage.jpg )
+    
+    ![Figure [Enroll In Class Page]: Enroll In Class Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/EnrollInClassPage.jpg )
+    
+    ![Figure [Manage Class Attendance Page]: Manage Class Attendance Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ManageClassAttendancePage.jpg )
+    
+    ![Figure [Manage Class Page]: Manage Class Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ManageClassPage.jpg )     
+    
+    ![Figure [Manage Student Details Page]: Manage Student Details Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/ManageStudentDetailsPage.jpg) 
+    
+    ![Figure [Mass Email Students Page]: Mass Email Students Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/MassEmailStudentsPage.jpg )
+    
+    ![Figure [Pending Students Page]: Pending Students Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/PendingStudentsPage.jpg )
+    
+    ![Figure [Upload Lesson Plan Page]: Upload Lesson Plan Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ClassSlection/UploadLessonPlanPage.jpg)
+    
+    \pagebreak
+    ### Contact Us
+    
+    ![Figure [ContactUsPage]: ContactUsPage](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\ContactUs/ContactUsPage.jpg)
+    
+    \pagebreak
+    ### Login
+    
+    ![Figure [Arco Hub Home Page Prelogin]: Arco Hub Home Page Prelogin](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/ArcoHubHomePagePrelogin.jpg )
+    
+    ![Figure [Login Page]: Login Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/LoginPage.jpg )
+    
+    ![Figure [Login Page Invalid Credentials]: Login Page Invalid Credentials](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/LoginPageInvalidCredentials.jpg )
+    
+    ![Figure [Register New Account]: Register New Account](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/Registernewaccount.jpg )
+    
+    ![Figure [Register New Account Invalid Credentials]: Register New Account Invalid Credentials](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/RegisternewaccountInvalidCredentials.jpg )
+    
+    <!--![Figure [Thumb]: Thumb](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/Thumbs.db )-->
+    
+    ![Figure [User Home Page Postlogin]: User Home Page Postlogin](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Login/UserHomePagePostlogin.jpg)
+    
+    \pagebreak
+    ### Messenger
+    
+    ![Figure [Messenger Page]: Messenger Page](https://raw.githubusercontent.com/ChrisMaxel/SYS390_FinalProject/master/imagesForSRS/Wireframes\Wireframes\Messenger/MessengerPage.jpg)
+
+Non-Functional Requirements
+============================
+
+    ### Non-Functional User Requirements
+        
+        Usability:
+        
+        Administrators, teachers, students, and unregistered users will be utilizing this system. 
+        For students and unregistered users, functionality will be limited and only a small portion of information will be viewable (in comparison to higher-level users). 
+        The interface for these lower-level users will be designed in a simplistic and intuitive fashion in order to efficiently display information.
+        
+        Teachers and Admins will have a higher level of functionality and have much more information available, so the design will be more detailed and capable of handling all the actions required for these users. 
+        However, the system will still be designed simplistically and intuitively for these higher-level users in order to increase efficiency and usability. 
+        More pages will be available to these users to more effectively satisfy their needs of higher functionality.
+        
+        The general look and feel of the system will be similar to the church’s current website to increase familiarity and approachability. 
+        The logo will be displayed on all pages and the color scheme will be similar to the current website. A menu bar will be accessible on most pages to make the website easier to navigate.
+         
+         
+        Accessibility:
+        
+        This website will be fully functional and comprehensible in both English and Spanish as this website will be used almost entirely in Ecuador, a Spanish-speaking country. 
+        English will also be used so that Taylor University developers can understand and update the system as needed. 
+        The software will be designed for easy and efficient use on both a desktop computer and mobile device. No adjustments will be made for users with disabilities as this was deemed unnecessary by the customer.
+         
+         
+        Availability:
+        
+        The system will be active and running 24/7. Admins may have to intervene for approval of accounts or updating information on the system. 
+        However, the system should remain functional without intervention outside of emergency maintenance. Maintenance is currently estimated to be around 5 hours per week. 
+        Any maintenance should take place at night because web traffic should be much lower then.
+         
+         
+        Documentation and Training:
+        
+        Documentation instructing users on how to use the system will be provided upon delivery. 
+        Different documentation will be provided for different levels of access, as the capabilities and functions will vary depending on the level of access. 
+        As the system is upgraded and changed, the documentation will be updated accordingly.
+         
+        No on the job training or instruction will be required to sufficiently utilize any part of the system. 
+        All parts of the system should be fairly intuitive, and the documentation should handle all training necessary to use the system.
+        
+    ### Non-Functional System Requirements
+    
+        Performance:
+        
+        The most typical interactions for this system will be navigating between pages on the website, creating and modifying classes, creating and modifying calendar entries, and creating and modifying accounts.
+        ·      Navigating between web pages should take no longer than 3 seconds
+        ·      Creating or modifying any class, calendar, or account information should take a few seconds
+        ·      All activities will be stored in the database in real time
+         
+        The system will be designed to support as many users as the church requires at one time. System performance may drop if a large number of users are online at one time.
+         
+         
+        Capacity:
+        
+        The system will be able to host any number of users necessary for the church’s classes. The system can be upgraded to adapt to a fluctuating number of users as the church grows in size. 
+        Class information will be marked as inactive when a class is completed. This information will no longer be viewable to any user; however, an admin account could access this information if necessary. 
+        Calendar information will be hidden once a month changes to the next, but this information will still be viewable to any registered user. All other information will remain active unless deleted by an admin.
+        
+        Security:
+        
+        Access Control:
+        
+        There are four levels of access for registered users (non-registered users will only be able to access the home page and a login/register for an account page).
+         
+        1.     Administrator
+            - Will be able to view any and all provided personal information for any user in the entire system
+            - Can modify any personal information as necessary
+            - Can change permissions of an account
+            - Can approve students for a class
+            - Can create accounts for new users of any access level
+            - Can create, modify, and view class information
+            - Can create, modify, and view calendar information
+         
+        2.     Teacher
+            - Can approve students for a class
+            - Can view student information          
+            - Can modify, and view class information                
+            - Can view calendar information
+            
+        3.     Student      
+            - Can view detailed class information               
+            - Can view calendar information             
+            - Can view messaging information                
+            - Can view announcements information                
+            - Can view contact information              
+            - Can sign up for classes
+         
+        4.     User     
+            - Can view basic class information (title, description, teacher, etc.)          
+            - Can view calendar information         
+            - Can sign up for classes
+            
+        We want to exercise the Security principle of Least Privilege, which in practice means that every program and every user of the system should operate using the least set of privileges necessary to complete the job.
+        
+        Network Connectivity is a concern due to the system containing personal information of a large number of people. 
+        Access is limited to just viewing the home page and a login/register for an account screen when a user is not registered or logged into the system. 
+        This prevents anyone outside the system from acting maliciously with any content of the system. When a user is registered in the system, 
+        their only permissions are viewing some information and signing up for a class. Since the permissions are very limited to only viewing some information and no personal data, 
+        this prevents any serious malicious activity. The only place where the system can be seriously corrupted is from an admin account, which must be pre-approved by another admin. 
+        
+        Confidentiality, availability, and user privacy are certainly a concern in a system that contains substantial personal information for a very large group of people. 
+        For anyone that is a registered user (admin, teacher, student, etc.), they can access any other user’s name and email. 
+        However, the system will never display one’s personal information (outside of the name and email) to another person who is not a pre-approved admin.
+        
+        No financial information will be stored in the system because no monetary transactions will ever happen on the website. 
+        The only information that at all pertains to finances of any kind will be a simple indicator that displays whether or not a student has paid for the class, which will only be viewable to admins and teachers.
+        
+        Longevity:
+        
+        The system should last indefinitely, as long as the church’s size is still manageable on the system being provided and no new musts or wants are introduced that aren’t 
+        already fulfilled by the system or can’t be upgraded into the system. Technological advances will undoubtedly surpass the capabilities of the system we have designed, 
+        but these advanced options will almost assuredly be costlier to implement (compared to keeping the current system) 
+        and might not necessarily work better than the current system in addressing the needs of the church. Updates and upgrades will be possible for the system being developed after installation.
+
+
+
+
+
+
+<!--    Don't touch the items bellow     -->
+
+<!-- The script and style below are added for clarity and to workaround a bug -->
+<script>
+    // this is a hack to workaround a bug in Markdeep+Mathjax, where
+    // &#36; is automatically converted to \( and \) too soon.
+    // the following code will replace the innerHTML of all elements
+    // with class "dollar" with a dollar sign.
+    setTimeout(function() {
+        var dollars = document.getElementsByClassName('dollar');
+        for(var i = 0; i < dollars.length; i++) {
+            dollars[i].innerHTML = '&#' + '36;';
+        }
+    }, 1000);
+</script>
+<style>
+    /* adding some styling to <code> tags (but not <pre><code> coding blocks!) */
+    :not(pre) > code {
+        background-color: rgba(0,0,0,0.05);
+        outline: 1px solid rgba(0,0,0,0.15);
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+    .md h1, .md .nonumberh1 {page-break-before:always}
+    body{font-family: Times New Roman}
+
+    /*.tb {align-items: left}*/
+</style>
+
+<!--Themes-->
+    <!--Dark theme-->
+        <!--link rel="stylesheet" href="https://casual-effects.com/markdeep/latest/dark.css?"-->
+    <!--Presentation Formatt-->
+        <!-- <link rel="stylesheet" href="https://casual-effects.com/markdeep/latest/slides.css?"> -->
+
+<!-- This [Markdeep](https://casual-effects.com/markdeep/) document is based on a template created by Dr. Denning. -->
+<!-- This template is based on the Princeton COS 423 LaTeX assignment template -->
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
