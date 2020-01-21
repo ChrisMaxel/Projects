@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/CS/users/cmaxel/.linux/COS232/cmaxel/course/cos232/project/steganography/main.c
+stdio.h
+-
+string.h
+-
+
