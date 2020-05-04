@@ -1,0 +1,28 @@
+Milwaukee
+Sheboygan
+Florence
+Bayfield
+Trempealeau
+Grant
+Rock
+Marquette
+
+Milwaukee
+Sauk
+Jackson
+Waupaca
+Door
+Forest
+Dunn
+Douglas
+
+Milwaukee
+Walworth
+Green
+Crawford
+Manitowoc
+Marinette
+La Crosse
+Taylor
+
+Colors: Light blue, red, yellow, orange, purple, navy, light green, dark green

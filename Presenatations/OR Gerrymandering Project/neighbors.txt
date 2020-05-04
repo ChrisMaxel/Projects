@@ -1,0 +1,72 @@
+Adams: Wood,Portage,Waushara,Marquette,Columbia,Juneau
+Ashland: Bayfield,Iron,Sawyer,Price
+Barron: Burnett,Washburn,Rusk,Chippewa,Dunn,Polk
+Bayfield: Douglas,Sawyer,Ashland
+Brown: Oconto,Kewaunee,Manitowoc,Calumet,Outagamie,Shawano
+Buffalo: Pepin,Eau Claire,Trempealeau
+Burnett: Douglas,Washburn,Barron,Polk
+Calumet: Outagamie,Brown,Manitowoc,Sheboygan,Fond du Lac,Winnebago
+Chippewa: Barron,Rusk,Taylor,Clark,Eau Claire,Dunn
+Clark: Chippewa,Taylor,Marathon,Wood,Jackson,Eau Claire
+Columbia: Adams,Marquette,Green Lake,Dodge,Dane,Sauk
+Crawford: Vernon,Richland,Grant
+Dane: Sauk,Columbia,Dodge,Jefferson,Rock,Green,Iowa
+Dodge: Green Lake,Fond du Lac,Washington,Waukesha,Jefferson,Dane,Columbia
+Door: Kewaunee
+Douglas: Bayfield,Washburn,Burnett
+Dunn: Barron,Chippewa,Eau Claire,Pepin,Pierce,St. Croix
+Eau Claire: Chippewa,Clark,Jackson,Trempealeau,Buffalo,Pepin,Dunn
+Florence: Forest,Marinette
+Fond du Lac: Winnebago,Calumet,Sheboygan,Washington,Dodge,Green Lake
+Forest: Vilas,Florence,Marinette,Oconto,Langlade,Oneida
+Grant: Crawford,Richland,Iowa,Lafayette
+Green: Iowa,Dane,Rock,Lafayette
+Green Lake: Waushara,Winnebago,Fond du Lac,Dodge,Columbia,Marquette
+Iowa: Richland,Sauk,Dane,Green,Lafayette,Grant
+Iron: Ashland,Vilas,Price
+Jackson: Eau Claire,Clark,Wood,Juneau,Monroe,La Crosse,Trempealeau
+Jefferson: Dodge,Waukesha,Walworth,Rock,Dane
+Juneau: Jackson,Wood,Adams,Vernon,Monroe
+Kenosha: Walworth,Racine
+Kewaunee: Door,Manitowoc,Brown
+La Crosse: Trempealeau,Jackson,Monroe,Vernon
+Lafayette: Grant,Iowa,Green
+Langlade: Oneida,Forest,Oconto,Menominee,Shawano,Marathon,Lincoln
+Lincoln: Price,Oneida,Langlade,Marathon,Taylor
+Manitowoc: Brown,Kewaunee,Sheboygan,Calumet
+Marathon: Taylor,Lincoln,Langlade,Shawano,Portage,Wood,Clark
+Marinette: Florence,Oconto,Forest
+Marquette: Waushara,Green Lake,Columbia,Adams
+Menominee: Langlade,Oconto,Shawano
+Milwaukee: Ozaukee,Racine,Waukesha
+Monroe: Jackson,Juneau,Vernon,La Crosse
+Oconto: Forest,Marinette,Brown,Shawano,Menominee,Langlade
+Oneida: Vilas,Forest,Langlade,Lincoln,Price
+Outagamie: Waupaca,Shawano,Brown,Calumet,Winnebago
+Ozaukee: Sheboygan,Milwaukee,Washington
+Pepin: Dunn,Eau Claire,Buffalo,Pierce
+Pierce: St. Croix,Dunn,Pepin
+Polk: Burnett,Barron,St. Croix
+Portage: Marathon,Waupaca,Waushara,Adams,Wood
+Price: Ashland,Iron,Vilas,Oneida,Lincoln,Taylor,Rusk,Sawyer
+Racine: Waukesha,Milwaukee,Kenosha,Walworth
+Richland: Vernon,Sauk,Iowa,Grant
+Rock: Dane,Jefferson,Walworth,Green
+Rusk: Sawyer,Price,Taylor,Chippewa,Barron
+St. Croix,Polk,Dunn,Pierce
+Sauk: Juneau,Adams,Columbia,Dane,Iowa,Richland,Vernon
+Sawyer: Bayfield,Ashland,Price,Rusk,Barron,Washburn
+Shawano: Langlade,Menominee,Oconto,Brown,Outagamie,Waupaca,Marathon
+Sheboygan: Calumet,Manitowoc,Ozaukee,Washington,Fond du Lac
+Taylor: Rusk,Price,Lincoln,Marathon,Clark,Chippewa
+Trempealeau: Eau Claire,Jackson,La Crosse,Buffalo
+Vernon: La Crosse,Monroe,Juneau,Sauk,Richland,Crawford
+Vilas: Forest,Oneida,Price,Iron
+Walworth: Jefferson,Waukesha,Racine,Kenosha,Rock
+Washburn: Douglas,Bayfield,Sawyer,Barron,Burnett
+Washington: Fond du Lac,Sheboygan Ozaukee,Waukesha,Dodge
+Waukesha: Dodge,Washington,Milwaukee,Racine,Walworth,Jefferson
+Waupaca: Shawano,Outagamie,Winnebago,Waushara,Portage
+Waushara: Portage,Waupaca,Winnebago,Green Lake,Marquette,Adams
+Winnebago: Waupaca,Outagamie,Calumet,Fond du Lac,Green Lake,Waushara
+Wood: Marathon,Portage,Adams,Juneau,Jackson,Clark
